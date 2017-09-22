@@ -37,66 +37,37 @@ public class Finder {
         }
     }
 
-    public void areSiblings(String first, String second) {
+    public void areSiblings(String firstName, String secondName) {
         try {
-            if (familyTree.getParents(first).equals(familyTree.getParents(second))) {
-                if (familyTree.getParents(first).isEmpty()) {
-                    System.out.println(first + " and " + second + " are not siblings.");
+            if (familyTree.getParents(firstName).equals(familyTree.getParents(secondName))) {
+                if (familyTree.getParents(firstName).isEmpty()) {
+                    System.out.println(firstName + " and " + secondName + " are not siblings.");
                     return;
                 }
-                System.out.println(first + " and " + second + " are siblings.");
+                System.out.println(firstName + " and " + secondName + " are siblings.");
             } else {
-                System.out.println(first + " and " + second + " are not siblings.");
+                System.out.println(firstName + " and " + secondName + " are not siblings.");
             }
         } catch (Exception e) {
             System.out.println("One of the names entered was not found from the family tree");
         }
     }
 
-    public void findAncestors(String name) {
+    public void findAncestors(String name) { // refactor
         try {
-            ArrayList<Member> ancestors;
-            ancestors = familyTree.getParents(name);
-            if (!ancestors.isEmpty()) {
-                if (familyTree.hasParents(ancestors.get(0).getName())) {
-                    ancestors.addAll(familyTree.getParents(ancestors.get(0).getName()));
-                }
-                if (familyTree.hasParents(ancestors.get(1).getName())) {
-                    ancestors.addAll(familyTree.getParents(ancestors.get(1).getName()));
-                }
-                if (ancestors.size() > 2) {
-                    if (familyTree.hasParents(ancestors.get(2).getName())) {
-                        ancestors.addAll(familyTree.getParents(ancestors.get(2).getName()));
-                    }
-                    if (ancestors.size() > 3) {
-                        if (familyTree.hasParents(ancestors.get(3).getName())) {
-                            ancestors.addAll(familyTree.getParents(ancestors.get(3).getName()));
-                        }
-                        if (ancestors.size() > 4) {
-                            if (familyTree.hasParents(ancestors.get(4).getName())) {
-                                ancestors.addAll(familyTree.getParents(ancestors.get(4).getName()));
-                            }
-                            if (ancestors.size() > 5) {
-                                if (familyTree.hasParents(ancestors.get(5).getName())) {
-                                    ancestors.addAll(familyTree.getParents(ancestors.get(5).getName()));
-                                }
-                                if (ancestors.size() > 6) {
-                                    if (familyTree.hasParents(ancestors.get(6).getName())) {
-                                        ancestors.addAll(familyTree.getParents(ancestors.get(6).getName()));
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            ArrayList<Member> ancestors = familyTree.getParents(name);
             if (ancestors.isEmpty()) {
                 System.out.println("No ancestors found for " + name);
+                return;
             } else {
-                System.out.println("Ancestors for " + name + " are: ");
-                ancestors.stream().forEach(a -> System.out.println("-" + a.getName()));
+                for (int i = 0; i < ancestors.size(); i++) {
+                    if (familyTree.hasParents(ancestors.get(i).getName())) {
+                        ancestors.addAll(familyTree.getParents(ancestors.get(i).getName()));
+                    }
+                }
             }
+            System.out.println("Ancestors for " + name + " are: ");
+            ancestors.stream().forEach(a -> System.out.println("-" + a.getName()));
         } catch (Exception e) {
             System.out.println("Couldn't find: " + name);
         }

@@ -41,7 +41,7 @@ public class FamilyTreeBuilder {
         familyTreeObject.getMember("Nick").addChildren(familyTreeObject.getMember("Sandra"));
     }
 
-    public void newMember() {
+    public void newMember() { // refactor
         ArrayList<Member> children = new ArrayList<>();
         System.out.print("Enter name of new member or person to be edited. (enter c to cancel)\nName: ");
         Member member = new Member(scanner.nextLine());
@@ -51,7 +51,7 @@ public class FamilyTreeBuilder {
         }
 
         if (familyTree.contains(member)) {
-            System.out.println(member.getName() + " is already at the family tree");
+            System.out.println(member.getName() + " is already a member of the family tree");
         } else {
             System.out.println("New people created: " + member.getName());
         }
@@ -66,23 +66,24 @@ public class FamilyTreeBuilder {
                 break;
             }
         }
+        
         if (familyTree.contains(member)) {
             Member correctMember = familyTreeObject.getMember(member.getName());
-            children.stream().forEach(child -> {
-                correctMember.addChildren(child);
-                System.out.println(child.getName() + " is the child of " + correctMember.getName());
-                this.familyTree.add(child);
-            });
+            updateFamilyTree(children, correctMember);
         } else {
             this.familyTree.add(member);
             System.out.println(member.getName() + " added to the family tree.");
-            children.stream().forEach(child -> {
-                member.addChildren(child);
-                System.out.println(child.getName() + " is the child of " + member.getName());
-                this.familyTree.add(child);
-            });
+            updateFamilyTree(children, member);
         }
 
+    }
+
+    public void updateFamilyTree(ArrayList<Member> children, Member correctMember) {
+        children.stream().forEach(child -> {
+            correctMember.addChildren(child);
+            System.out.println(child.getName() + " is the child of " + correctMember.getName());
+            this.familyTree.add(child);
+        });
     }
 
 }

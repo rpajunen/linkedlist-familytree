@@ -45,8 +45,5 @@ public class Member {
         }
         final Member other = (Member) obj;
         return Objects.equals(this.name, other.name);
-    }
-
-    
-    
+    }  
 }
