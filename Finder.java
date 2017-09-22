@@ -11,34 +11,31 @@ public class Finder {
     }
 
     public void findParents(String name) {
-        try {
+        if (isMember(name)) {
             if (familyTree.getParents(name).isEmpty()) {
-                System.out.println("No parents found for " + name);
+                System.out.println(name + " has no parents in the family tree");
             } else {
                 System.out.println("Parents of " + name + " are:");
-                familyTree.getParents(name).stream().forEach(p -> System.out.println("-" + p.getName()));
+                familyTree.getParents(name).stream().forEach(parent -> System.out.println("-" + parent.getName()));
             }
-        } catch (Exception e) {
-            System.out.println("Couldn't find: " + name);
-
         }
     }
 
     public void findChildren(String name) {
         try {
             if (familyTree.getMember(name).getChildren().isEmpty()) {
-                System.out.println("No children found for " + name);
+                System.out.println(name + " has no children in the family tree");
             } else {
                 System.out.println("Children for " + name + " are: ");
-                familyTree.getMember(name).getChildren().stream().forEach(c -> System.out.println("-" + c.getName()));
+                familyTree.getMember(name).getChildren().stream().forEach(child -> System.out.println("-" + child.getName()));
             }
         } catch (Exception e) {
-            System.out.println("Couldn't find: " + name);
+            System.out.println(name + " is not a member of the family tree");
         }
     }
 
     public void areSiblings(String firstName, String secondName) {
-        try {
+        if (isMember(firstName) && isMember(secondName)) {
             if (familyTree.getParents(firstName).equals(familyTree.getParents(secondName))) {
                 if (familyTree.getParents(firstName).isEmpty()) {
                     System.out.println(firstName + " and " + secondName + " are not siblings.");
@@ -48,16 +45,14 @@ public class Finder {
             } else {
                 System.out.println(firstName + " and " + secondName + " are not siblings.");
             }
-        } catch (Exception e) {
-            System.out.println("One of the names entered was not found from the family tree");
         }
     }
 
-    public void findAncestors(String name) { // refactor
-        try {
+    public void findAncestors(String name) {
+        if (isMember(name)) {
             ArrayList<Member> ancestors = familyTree.getParents(name);
             if (ancestors.isEmpty()) {
-                System.out.println("No ancestors found for " + name);
+                System.out.println(name + " has no ancestors in the family tree");
                 return;
             } else {
                 for (int i = 0; i < ancestors.size(); i++) {
@@ -67,14 +62,20 @@ public class Finder {
                 }
             }
             System.out.println("Ancestors for " + name + " are: ");
-            ancestors.stream().forEach(a -> System.out.println("-" + a.getName()));
-        } catch (Exception e) {
-            System.out.println("Couldn't find: " + name);
+            ancestors.stream().forEach(ancestor -> System.out.println("-" + ancestor.getName()));
         }
     }
 
     public void showAllMembers() {
-        familyTree.getFamilyTree().stream().forEach(m -> System.out.println("-" + m.getName()));
+        familyTree.getFamilyTree().stream().forEach(member -> System.out.println("-" + member.getName()));
+    }
+
+    private boolean isMember(String name) {
+        if (!familyTree.getFamilyTree().contains(familyTree.getMember(name))) {
+            System.out.println(name + " is not a member of the family tree");
+            return false;
+        }
+        return true;
     }
 
 }

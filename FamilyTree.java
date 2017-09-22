@@ -27,7 +27,7 @@ public class FamilyTree {
         return familyTree.stream()
                 .filter(m -> m.getName().equals(name))
                 .findFirst()
-                .get();
+                .orElse(null);
     }
 
     public ArrayList<Member> getParents(String child) {            
@@ -42,6 +42,4 @@ public class FamilyTree {
                 });
         return parents;
     }
-    
-    
 }
