@@ -29,6 +29,7 @@ public class FamilyTreeBuilder {
         familyTreeObject.add("Tim");
         familyTreeObject.add("Nick");
         familyTreeObject.add("Roope");
+        familyTreeObject.add("Keijo");
 
 
         familyTreeObject.getMember("Sam").addChildren(familyTreeObject.getMember("Alex"));
