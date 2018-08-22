@@ -41,7 +41,7 @@ public class FamilyTreeBuilder {
         familyTreeObject.getMember("Nick").addChildren(familyTreeObject.getMember("Sandra"));
     }
 
-    public void newMember() { // refactor
+    public void newMember() {
         ArrayList<Member> children = new ArrayList<>();
         System.out.print("Enter name of new member or person to be edited. (enter c to cancel)\nName: ");
         Member member = new Member(scanner.nextLine());
